@@ -14,6 +14,9 @@ new Vue({
                 if (json.success) {
                     self.questionnaire = json.questionnaire;
                     var questions = self.questionnaire.questions;
+                    // for(var i=0;i<questions.length;i++){
+                    //     var question=questions[i];
+                    // }
                     questions.forEach(function (question) {
                         var optionsCount = 0;
                         question.options.forEach(function (option) {
