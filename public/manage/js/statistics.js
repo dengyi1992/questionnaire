@@ -19,7 +19,7 @@ new Vue({
                     // }
                     questions.forEach(function (question) {
                         var optionsCount = 0;
-                        if (question.type!=0){
+                        if (question.type!=3){
                             question.options.forEach(function (option) {
                                 optionsCount += option.count;
                             });
