@@ -19,9 +19,12 @@ new Vue({
                     // }
                     questions.forEach(function (question) {
                         var optionsCount = 0;
-                        question.options.forEach(function (option) {
-                            optionsCount += option.count;
-                        });
+                        if (question.type!=0){
+                            question.options.forEach(function (option) {
+                                optionsCount += option.count;
+                            });
+                        }
+
                         question.optionsCount = optionsCount;
                         var data = [{
                             type: 'bar',
