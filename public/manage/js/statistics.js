@@ -23,43 +23,44 @@ new Vue({
                             question.options.forEach(function (option) {
                                 optionsCount += option.count;
                             });
-                        }
-
-                        question.optionsCount = optionsCount;
-                        var data = [{
-                            type: 'bar',
-                            x: question.options.map(function (option) {
+                            question.optionsCount = optionsCount;
+                            var data = [{
+                                type: 'bar',
+                                x: question.options.map(function (option) {
                                     return option.count;
                                 })
-                                .reverse(),
-                            y: question.options.map(function (option, index) {
+                                    .reverse(),
+                                y: question.options.map(function (option, index) {
                                     return '选项' + (index + 1);
                                 })
-                                .reverse(),
-                            text: question.options.map(function (option) {
+                                    .reverse(),
+                                text: question.options.map(function (option) {
                                     return option.content;
                                 })
-                                .reverse(),
-                            hoverinfo: 'text',
-                            orientation: 'h'
-                        }];
-                        var layout = {
-                            font: {
-                                size: 14
-                            },
-                            autosize: false,
-                            height: question.options.length * 50 + 40,
-                            margin: {
-                                l: 50,
-                                r: 50,
-                                b: 20,
-                                t: 20,
-                                pad: 4
-                            }
-                        };
-                        setTimeout(function () {
-                            Plotly.newPlot(question._id, data, layout, {displayModeBar: false});
-                        }, 100);
+                                    .reverse(),
+                                hoverinfo: 'text',
+                                orientation: 'h'
+                            }];
+                            var layout = {
+                                font: {
+                                    size: 14
+                                },
+                                autosize: false,
+                                height: question.options.length * 50 + 40,
+                                margin: {
+                                    l: 50,
+                                    r: 50,
+                                    b: 20,
+                                    t: 20,
+                                    pad: 4
+                                }
+                            };
+                            setTimeout(function () {
+                                Plotly.newPlot(question._id, data, layout, {displayModeBar: false});
+                            }, 100);
+                        }
+
+
                     });
                 } else {
                     console.log(json.error);
