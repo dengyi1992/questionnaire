@@ -19,27 +19,35 @@ exports.questionnaireData = function (req, res) {
             select: 'content type'
         })
         .exec(function (err, questionaire) {
-            async.map(questionaire.questions, function (question, callback) {
-                Option.find({question: question._id})
-                    .select('content')
-                    .exec(function (err, options) {
-                        var _question = question.toObject();
-                        _question.options = options;
-                        callback(err, _question);
-                    })
-            }, function (err, results) {
-                if (err) {
-                    return res.json({
-                        success: false,
-                        error: err.message
-                    })
-                }
-                res.json({
-                    success: true,
-                    title: questionaire.title,
-                    questions: results
+            if (questionaire==null){
+                return res.json({
+                    success: false,
+                    error: '无该问题id'
                 });
-            });
+            }else {
+                async.map(questionaire.questions, function (question, callback) {
+                    Option.find({question: question._id})
+                        .select('content')
+                        .exec(function (err, options) {
+                            var _question = question.toObject();
+                            _question.options = options;
+                            callback(err, _question);
+                        })
+                }, function (err, results) {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            error: err.message
+                        })
+                    }
+                    res.json({
+                        success: true,
+                        title: questionaire.title,
+                        questions: results
+                    });
+                });
+            }
+
         });
 };
 
