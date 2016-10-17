@@ -43,6 +43,7 @@ app.get('/manage/question/add', Admin.loginRequired, Question.addPage);
 app.get('/manage/question/:question', Admin.loginRequired, Question.editPage);
 app.post('/manage/question/add', Admin.loginRequired, Question.add);
 app.get('/data/questionnaires', Admin.loginRequired, Questionnaire.list);
+app.get('/data/questionnairesList', Questionnaire.list);
 app.get('/data/questionnaire/:questionnaire', Admin.loginRequired, Questionnaire.detail);
 app.get('/data/questions', Admin.loginRequired, Question.list);
 app.get('/data/question/:question', Admin.loginRequired, Question.detail);
