@@ -77,7 +77,15 @@ exports.submit = function (req, res) {
 exports.msubmit = function (req, res) {
     var questionnaireId = req.params.questionnaire;
     var answer =req.body.answer;
-    // answer.forEach()
+    answer=JSON.parse(answer);
+    for (var questionId in answer) {
+        if (answer.hasOwnProperty(questionId)) {
+            answer[questionId]=answer[questionId].split(',');
+
+        }
+
+    }
+    answer=JSON.stringify(answer);
 
     new Answer({
         questionnaire: questionnaireId,
