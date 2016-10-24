@@ -54,6 +54,8 @@ app.delete('/data/option/:option', Admin.loginRequired, Option.delete);
 
 app.get('/questionnaire/:questionnaire', Answer.indexPage);
 app.post('/questionnaire/:questionnaire', Answer.submit);
+app.post('/questionnaire/m/:questionnaire', Answer.msubmit);
+
 app.get('/user/questionnaire/:questionnaire', Answer.questionnaireData);
 app.get('/result/:questionnaire', Answer.resultPage);
 app.get('/statistics/:questionnaire', Answer.statistics);

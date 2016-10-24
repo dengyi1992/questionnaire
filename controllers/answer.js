@@ -69,6 +69,31 @@ exports.submit = function (req, res) {
         });
     });
 };
+/**
+ * 手机端
+ * @param req
+ * @param res
+ */
+exports.msubmit = function (req, res) {
+    var questionnaireId = req.params.questionnaire;
+    var answer =req.body.answer;
+    // answer.forEach()
+
+    new Answer({
+        questionnaire: questionnaireId,
+        content: answer
+    }).save(function (err, answer) {
+        if (err) {
+            return res.json({
+                success: false,
+                error: err.message
+            })
+        }
+        res.json({
+            success: true
+        });
+    });
+};
 
 exports.resultPage = function (req, res) {
     res.sendFile(path.join(__dirname, '../view/manage/statistics.html'));
@@ -141,6 +166,9 @@ exports.statistics = function (req, res) {
                                             }
                                             if (question.type == 2) {
                                                 var options = answer[questionId];
+                                                if (typeof options=="string"){
+                                                    options=options.split(",")
+                                                }
                                                 options.forEach(function (optionId) {
                                                     for (var j = 0, l = question.options.length; j < l; j++) {
                                                         var option = question.options[j];
