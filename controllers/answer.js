@@ -19,12 +19,12 @@ exports.questionnaireData = function (req, res) {
             select: 'content type'
         })
         .exec(function (err, questionaire) {
-            if (questionaire==null){
+            if (questionaire == null) {
                 return res.json({
                     success: false,
                     error: '无该问题id'
                 });
-            }else {
+            } else {
                 async.map(questionaire.questions, function (question, callback) {
                     Option.find({question: question._id})
                         .select('content')
@@ -76,16 +76,15 @@ exports.submit = function (req, res) {
  */
 exports.msubmit = function (req, res) {
     var questionnaireId = req.params.questionnaire;
-    var answer =req.body.answer;
-    answer=JSON.parse(answer);
+    var answer = req.body.answer;
+    answer = JSON.parse(answer);
     for (var questionId in answer) {
-        if (answer.hasOwnProperty(questionId)) {
-            answer[questionId]=answer[questionId].split(',');
-
+        if (answer.hasOwnProperty(questionId) && answer[questionId].startsWith("----")) {
+            answer[questionId] = answer[questionId].substring(4).split(',');
         }
 
     }
-    answer=JSON.stringify(answer);
+    answer = JSON.stringify(answer);
 
     new Answer({
         questionnaire: questionnaireId,
@@ -152,7 +151,7 @@ exports.statistics = function (req, res) {
                         error: err.message
                     });
                 }
-                Answer.find({questionnaire:questionnaireId})
+                Answer.find({questionnaire: questionnaireId})
                     .select('content')
                     .exec(function (err, answers) {
                         async.each(answers, function (_answer, callback) {
@@ -174,8 +173,8 @@ exports.statistics = function (req, res) {
                                             }
                                             if (question.type == 2) {
                                                 var options = answer[questionId];
-                                                if (typeof options=="string"){
-                                                    options=options.split(",")
+                                                if (typeof options == "string") {
+                                                    options = options.split(",")
                                                 }
                                                 options.forEach(function (optionId) {
                                                     for (var j = 0, l = question.options.length; j < l; j++) {
